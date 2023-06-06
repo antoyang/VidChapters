@@ -1,0 +1,17 @@
+h5py
+matplotlib
+numpy
+pandas
+Pillow
+PyYAML
+six
+tqdm
+tensorboardX
+colorlog
+scipy
+pandas
+h5py
+av
+joblib
+tqdm
+google_trans_new
