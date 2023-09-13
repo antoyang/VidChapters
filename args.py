@@ -341,5 +341,17 @@ def get_args_parser():
         default=224,
         help="spatial resolution for raw video",
     )
+    parser.add_argument(
+        "--video_example",
+        default="",
+        type=str,
+        help="path to a video example for demo",
+    )
+    parser.add_argument(
+        "--asr_example",
+        default="",
+        type=str,
+        help="path to a ASR example for demo",
+    )
 
     return parser
