@@ -251,7 +251,7 @@ def start_inference():
         span_loss_type=opt.span_loss_type,
         txt_drop_ratio=0,
         downsample=opt.downsample,
-        subtitles_path="TOFILL",
+        subtitles_path=opt.subtitles_path,
         use_speech=opt.use_speech,
         use_speech_time=opt.use_speech_time,
         speech_max_l=opt.max_speech_l,
