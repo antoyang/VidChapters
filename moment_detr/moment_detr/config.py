@@ -71,6 +71,7 @@ class BaseOptions(object):
         parser.add_argument("--train_path", type=str, default=None)
         parser.add_argument("--eval_path", type=str, default=None,
                             help="Evaluating during training, for Dev set. If None, will only do training, ")
+        parser.add_argument("--subtitles_path", type=str, default=None)
         parser.add_argument("--no_norm_vfeat", action="store_true", help="Do not do normalize video feat")
         parser.add_argument("--no_norm_tfeat", action="store_true", help="Do not do normalize text feat")
         parser.add_argument("--v_feat_dirs", type=str, nargs="+",
