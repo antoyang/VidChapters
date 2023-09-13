@@ -6,8 +6,7 @@ import pickle
 import random
 import numpy as np
 import ffmpeg
-from util.t5 import create_sentinel_ids, filter_input_ids, random_spans_noise_mask
-from args import MODEL_DIR, name2folder
+from args import DATA_DIR, name2folder
 
 
 def _get_output_dim(h, w, resolution):
@@ -276,7 +275,7 @@ def build_videocaptioning_dataset(dataset_name, split, args):
         raise NotImplementedError
     return VideoCaptioning_Dataset(json_path=json_path,
                                    features_path=features_path,
-                                   videos_path=os.path.join(DATA_DIR, name2folder["chapters"], "video_paths.json") if dataset_name == "chapters" and "blip" in args.model_name else None,
+                                   videos_path=os.path.join(DATA_DIR, name2folder[dataset_name], "video_paths.json") if "blip" in args.model_name else None,
                                    training=split=="train",
                                    max_feats=args.max_feats,
                                    features_dim=args.features_dim,
