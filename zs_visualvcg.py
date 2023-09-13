@@ -206,8 +206,8 @@ dataloader = DataLoader(
     num_workers=args.num_workers,
 )
 
-processor = Blip2Processor.from_pretrained("Salesforce/blip2-flan-t5-xl")
-model = Blip2ForConditionalGeneration.from_pretrained("Salesforce/blip2-flan-t5-xl", torch_dtype=th.float16)
+processor = Blip2Processor.from_pretrained(args.model_name)
+model = Blip2ForConditionalGeneration.from_pretrained(args.model_name, torch_dtype=th.float16)
 device = th.device(args.device)
 model.to(device)
 model.eval()

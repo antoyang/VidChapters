@@ -42,20 +42,6 @@ def train_one_epoch(
     for i_batch, batch_dict in enumerate(
         metric_logger.log_every(data_loader, args.print_freq, header)
     ):
-        if args.save_every and (epoch * len(data_loader) + i_batch) % args.save_every == args.save_every - 1 and args.save_dir:
-            checkpoint_path = os.path.join(
-                args.save_dir, f"ckpt.pth"
-            )
-            dist.save_on_master(
-                {
-                    "model": model.state_dict(),
-                    "optimizer": optimizer.state_dict(),
-                    "epoch": epoch,
-                    "args": args,
-                },
-                checkpoint_path,
-            )
-
         input_text = batch_dict["input_text"]
         output_text = batch_dict["output_text"]
         video = batch_dict["video"].to(device)

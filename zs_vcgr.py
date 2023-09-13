@@ -217,7 +217,7 @@ dataloader = DataLoader(
 )
 
 device = th.device(args.device)
-if args.no_video:
+if not args.use_video:
     model = BertModel.from_pretrained('bert-base-uncased').to(device).half()
     tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
 else:
@@ -265,7 +265,7 @@ def evaluate(
                     res[vid] = {'pred': [[s, e] * len(gt)],
                                 'gt': gt}
                 continue
-            if args.no_video:
+            if not args.use_video:
                 if not sub["text"]:
                     s = float(random.randint(0, int(dur)))
                     e = float(random.randint(s, int(dur)))
