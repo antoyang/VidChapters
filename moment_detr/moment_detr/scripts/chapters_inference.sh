@@ -13,6 +13,7 @@ eval_split_name=test
 ######## setup video+text features
 feat_root=TOFILL
 feat_root_eval=TOFILL
+subtitles_path=TOFILL
 
 # video features
 v_feat_dim=0
@@ -46,4 +47,5 @@ PYTHONPATH=$PYTHONPATH:. python moment_detr/inference.py \
 --n_epoch ${n_epoch} \
 --max_es_cnt ${max_es_cnt} \
 --eval_path ${eval_path} \
+--subtitles_path ${subtitles_path} \
 ${@:1}
