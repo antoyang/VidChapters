@@ -217,6 +217,7 @@ The zero-shot evaluation can be simply done by loading a checkpoint pretrained o
 ## Demo
 To run a pretrained Vid2Seq model on the video of your choice, you first need to extract ASR with the following command: 
 ```
+conda activate whisperX_env
 python demo_asr.py --video_example=<VIDEO_PATH> --asr_example <OUTPUT_ASR_PATH> --combine_datasets chapters
 ```
 
