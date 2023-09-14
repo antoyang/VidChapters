@@ -1,56 +1,69 @@
 # VidChapters-7M: Video Chapters at Scale
 
-[Webpage](https://antoyang.github.io/vidchapters-7m.html)
+[Webpage](https://antoyang.github.io/vidchapters.html) • [Paper](https://arxiv.org/abs/TBC) 
 
-![Teaser](https://antoyang.github.io/img/vidchapters-7m.png)
+![Teaser](https://antoyang.github.io/img/vidchapters.png)
 
 In this work, we present VidChapters-7M, a large-scale dataset of user-chaptered videos. 
 We study three tasks on top of this dataset and show that video chapter generation models trained on VidChapters-7M transfer well to dense video captioning.
 
 This repository provides the code for our paper, including:
 - Environment setup
-- Data collection pipeline for VidChapters-7M
-- Data downloading instructions
-- Data processing scripts
+- Data collection pipeline for VidChapters-7M (in case you want to collect your own set of chaptered videos)
+- Data downloading instructions and processed data files
+- Data processing scripts (in case you want to reproduce the preprocessing)
 - Training and evaluation scripts for the tasks of video chapter generation without or with ground-truth boundaries and video chapter grounding on VidChapters-7M, and dense video captioning on YouCook2 and ViTT
+- Pretrained model checkpoints
+- A demo to chapter or densely caption the video of your choice with a pretrained Vid2Seq model
 
-Preprocessed data and model checkpoints will be released soon.
+This codebase also includes a PyTorch implementation of [Vid2Seq](https://antoyang.github.io/vid2seq.html) (notably in `model/vid2seq.py`). 
+There are a few differences with the original [Jax implementation](https://github.com/google-research/scenic/tree/main/scenic/projects/vid2seq), including:
+- Usage of [t5-base](https://huggingface.co/docs/transformers/model_doc/t5) instead of [t5-v1_1-base](https://huggingface.co/docs/transformers/model_doc/t5v1.1)
+- Addition of a normalization of the weights related to time tokens at every optimization step
+- No random temporal cropping
+- Whisper ASR instead of Google ASR
 
 ## Paths and Requirements
-Fill the empty paths in the file `args.py`.
+Fill the empty paths in the file `args.py` (and if you wish to use PDVC / Moment-DETR, in the scripts in `PDVC/cfgs` / `moment_detr/moment_detr/scripts/`).
 
-To install requirements, run:
+To use the evaluation scripts with the METEOR captioning metric, you also need Java.
+
+To install requirements (originally done in Python 3.7), run:
 ```
 pip install -r requirements.txt
 ```
 
-Note: all [PDVC](https://github.com/ttengwang/PDVC) experiments are run with a separate conda environment as suggested in the PDVC codebase, so to compile the deformable attention layer.
+Notes: 
+- The Whisper ASR extraction is done with a separate conda environment created as specificied in [WhisperX](https://github.com/m-bain/whisperX), with Python 3.10 and PyTorch 2.0. 
+- The PDVC experiments are run with a separate conda environment as suggested by [PDVC](https://github.com/ttengwang/PDVC) , so to compile the deformable attention layer.
 
 ## Data collection pipeline
-To start, you may get a bunch of YouTube video IDs (that do not necessarily contain video chapters) 
-and use [yt-dlp](https://github.com/yt-dlp/yt-dlp) to download descriptions from YouTube, e.g., ``yt-dlp https://www.youtube.com/watch?v=<VIDEO_ID> --write-description --skip-download``.
+To start, you should get a bunch of YouTube video IDs (that do not necessarily contain video chapters) 
+and use [yt-dlp](https://github.com/yt-dlp/yt-dlp) to download descriptions from YouTube, 
+e.g., ``yt-dlp https://www.youtube.com/watch?v=<VIDEO_ID> --write-description --skip-download``.
 
-Then, assuming the descriptions are downloaded as `.txt` files in `SSD_DIR/chapters_descriptions`, you can run ``python collection/desc2chapters.py`` to extract chapters from descriptions.
+Then, assuming the descriptions are downloaded as `.txt` files in `SSD_DIR/chapters_descriptions`, 
+you can run ``python collection/desc2chapters.py`` to extract chapters from descriptions.
 The output file maps video IDs of user-chaptered videos to the chapter titles and timestamps.
-You can then download the YouTube video content of videos with chapters with [yt-dlp](https://github.com/yt-dlp/yt-dlp), e.g., ``yt-dlp https://www.youtube.com/watch?v=<VIDEO_ID>``.
+You can then download the YouTube video content of videos with chapters with [yt-dlp](https://github.com/yt-dlp/yt-dlp), 
+e.g., ``yt-dlp https://www.youtube.com/watch?v=<VIDEO_ID>``.
 
 ## Data downloading
-***VidChapters-7M:*** We provide the dataset at [this link](https://antoyang.github.io/vidchapters7m.html).
+***VidChapters-7M:*** We provide the dataset annotations and ASR at [this link](https://antoyang.github.io/vidchapters.html).
 You should download the annotations in `DATA_DIR/AllChapters`.
-The license is in `LICENSE`.
+We also provide processed annotations [here](https://drive.google.com/drive/folders/1vDH0l9wprLqXFyJ3HiKRgb9Xsobr72b-?usp=sharing).
 
 ***HowTo100M:*** We use a [sentencified version](https://www.robots.ox.ac.uk/~vgg/research/tan/) of the dataset.
 You should download it in `DATA_DIR/howto100m`.
-The license is [here](https://github.com/antoine77340/howto100m/blob/master/LICENSE).
 
 ***ViTT:*** Download it from [the data providers](https://github.com/google-research-datasets/Video-Timeline-Tags-ViTT). 
 You will also need to download the mapping between 4-character IDs from YouTube-8M to YouTube video IDs. 
 You should download these in `DATA_DIR/ViTT`.
-The license is [here](https://github.com/google-research-datasets/Video-Timeline-Tags-ViTT/blob/main/LICENSE).
+We also provide processed annotations, ASR and visual features [here](https://drive.google.com/drive/folders/18xIK6RJY7fxlE4PWhE4NN81Ff0-k2JF0?usp=sharing).
 
 ***YouCook2:*** Download it from [the data providers](http://youcook2.eecs.umich.edu/).
 You should download these in `YouCook2`.
-The license is [here](https://github.com/LuoweiZhou/ProcNets-YouCook2/blob/master/LICENSE).
+We also provide processed annotations, ASR and visual features [here](https://drive.google.com/drive/folders/1hTDCIZU_TOB0a5jvRhY98lDChe93Tcqs?usp=sharing).
 
 ## Data processing
 
@@ -61,26 +74,28 @@ We store them in `SSD_DIR/chapters_clipvitl14_features`, one file per video, for
 ### ASR Extraction
 To extract ASR, given a `csv` file prepared like for the visual feature extraction and an `output_path` where to store the extracted ASR, we run on a single GPU:
 ```
-python asr_extract/whisper_inference.py --csv=$csv --output_path=$output_path --faster
+conda activate whisperX_env
+python asr_extract/whisper_inference.py --csv=<csv> --output_path=<output_path> --faster
 ```
 You may parallelize this over many jobs.
 Note that this requires having downloaded the [Whisper Large-V2](https://github.com/openai/whisper) model weights in `<MODEL_DIR>`.
 
 We then gather the extracted ASR into a single file `asr` by running:
 ```
-python asr_extract/merge_asr_whisper.py $output_path DATA_DIR/AllChapters/whisper.pkl
+python asr_extract/merge_asr_whisper.py <output_path> DATA_DIR/AllChapters/whisper.pkl
 ```
 
 To extract word-level timestamps and segment the ASR into sentences, we run on a single GPU:
 ```
-python asr_extract/whisper_align.py --csv=$csv --asr=DATA_DIR/AllChapters/whisper.pkl --output_path=$align_output_path
+conda activate whisperX_env
+python asr_extract/whisper_align.py --csv=<csv> --asr=DATA_DIR/AllChapters/whisper.pkl --output_path=<align_output_path>
 ```
 You may parallelize this over many jobs.
 Note that this requires having downloaded the alignment model weights for all languages from [WhisperX](https://github.com/m-bain/whisperX) in `<MODEL_DIR>`.
 
 Finally, we merge the aligned ASR into a single file by running:
 ```
-python asr_extract/merge_asr_whisper_align.py $align_output_path DATA_DIR/AllChapters/asr.pkl DATA_DIR/AllChapters/whisper.pkl
+python asr_extract/merge_asr_whisper_align.py <align_output_path> DATA_DIR/AllChapters/asr.pkl DATA_DIR/AllChapters/whisper.pkl
 ```
 
 ### Annotation files
@@ -100,14 +115,32 @@ python nsfw.py
 You may parallelize this over many jobs.
 Note that this requires having downloaded [this NSFW classifier](https://github.com/LAION-AI/CLIP-based-NSFW-Detector) and the [Detoxify language model](https://github.com/unitaryai/detoxify).
 
+## Model checkpoints
+
+We release the following Vid2Seq checkpoints and report their corresponding SODA performance.
+
+| Training data | VidChapters-7M | YouCook2 | ViTT | url | size |
+|-----|-----|-----|-----|-----|-----|
+| HowTo100M | 10.6 | | | [Drive](https://drive.google.com/file/d/1iTnzjTRKV3ctEMjCfiXed824_apJeUZJ/view?usp=sharing)    | 3.2GB     |
+| VidChapters-7M | | | | [Drive](https://drive.google.com/file/d/1GxzczoofH8AASPgrLWUD9oRwMPSYoKRP/view?usp=sharing)    | 3.2GB     |
+| HowTo100M + VidChapters-7M | 11.4 | | | [Drive](https://drive.google.com/file/d/117GoH6QLE1hjycCa9i43HxlAgvNWQ6Mz/view?usp=sharing)    | 3.2GB     |
+| HowTo100M + VidChapters-7M + YouCook2 | | 10.3 | | [Drive](https://drive.google.com/file/d/1bzYgUhQHtLt9RA3R6NWTmVlii-41nUqv/view?usp=sharing)    | 3.2GB      |
+| HowTo100M + VidChapters-7M + ViTT | | | 15.0 | [Drive](https://drive.google.com/file/d/1peVkJ0Zo0CZt8wHFYxn44lTMIWwipviW/view?usp=sharing)    | 3.2GB      |
+
 ## Training and evaluation
+Evaluation can be done with the same scripts as below but specifying `--load=<CHECKPOINT> --eval`.
+
+Note that most of our training runs were done using A100 GPUs with 80GB of memory. 
+You may need to adapt the batch size if you are using lower memory GPUs.
+
+Also, to use BLIP-2 based models, you need to download raw videos from the corresponding datasets and prepare a `video_paths.json` file that maps video IDs to the video path.
 
 ### Vid2Seq Pretraining on HowTo100M
 Run:
 ```
 python -m torch.distributed.launch --nproc_per_node 8 --use_env dvc.py --epochs=5 --fraction_warmup_steps=0.01 --lr=3e-4 --print_freq=1000 --save_dir=howto100m --combine_datasets htm --batch_size=8 --clip_max_norm=0.1
 ```
-The pretrained checkpoint on HowTo100M can then be loaded with the argument `--load`. 
+The pretrained checkpoint on HowTo100M can then be loaded with the argument `--load`.
 
 ### Video Chapter Generation
 For Vid2Seq, run:
@@ -118,18 +151,20 @@ Multiple baselines reported in the paper can also be found in `args.py`, e.g. us
 
 For PDVC, run:
 ```
-python PDVC/train.py --cfg_path PDVC/cfgs/chapter_clip_pdvc.yml --gpu_id 0 --epoch 5 --no_self_iou --lr 1e-4
+cd PDVC
+conda activate PDVC_env
+python train.py --cfg_path cfgs/chapters_clip_pdvc.yml --gpu_id 0 --epoch 5 --no_self_iou --lr 1e-4
 ```
 
 For the text tiling + LLaMA zero-shot baseline, run:
 ```
-python -m torch.distributed.launch --nproc_per_node 8 --use_env zs_speechvcg.py --combine_datasets=chapters --combine_datasets_val=chapters --save_dir=chapters_texttilingllama
+python -m torch.distributed.launch --nproc_per_node 8 --use_env zs_speechvcg.py --combine_datasets=chapters --combine_datasets_val=chapters --save_dir=chapters_texttilingllama --model_name <MODEL_DIR>/7BHF
 ```
 Pass `--random` to the previous command to run the random baseline.
 
 For the shot detection + BLIP-2 zero-shot baseline, run:
 ```
-python -m torch.distributed.launch --nproc_per_node 8 --use_env zs_visualvcg.py --combine_datasets=chapters --combine_datasets_val=chapters --save_dir=chapters_shotdetectblip2
+python -m torch.distributed.launch --nproc_per_node 8 --use_env zs_visualvcg.py --combine_datasets=chapters --combine_datasets_val=chapters --save_dir=chapters_shotdetectblip2 --model_name Salesforce/blip2-flan-t5-xl
 ```
 
 ### Video Chapter Generation with Ground-Truth Boundaries
@@ -152,28 +187,54 @@ python -m torch.distributed.launch --nproc_per_node 8 --use_env vc.py --model_na
 ### Video Chapter Generation Grounding
 For Moment-DETR, run:
 ```
-bash moment_detr/moment_detr/scripts/chapters.sh --use_speech --max_v_l=1200 --downsample --clip_length=3 --lr=3e-4 --n_epoch=50 --max_es_cnt=50 --exp_id=chapters --bsz=256 --eval_bsz=256 --num_workers=16
+cd moment_detr
+bash moment_detr/scripts/chapters.sh --use_speech --max_v_l=1200 --downsample --clip_length=3 --lr=3e-4 --n_epoch=50 --max_es_cnt=50 --exp_id=chapters --bsz=256 --eval_bsz=256 --num_workers=16
 ```
 
 For the CLIP zero-shot baseline, run:
 ```
-python -m torch.distributed.launch --nproc_per_node 8 --use_env vcgr.py --save_dir=chapters_vcgr_clip --combine_datasets chapters --combine_datasets_val chapters
+python -m torch.distributed.launch --nproc_per_node 8 --use_env zs_vcgr.py --save_dir=chapters_vcgr_clip --combine_datasets chapters --combine_datasets_val chapters
 ```
 
 For the BERT zero-shot baseline, run:
 ```
-python -m torch.distributed.launch --nproc_per_node 8 --use_env vcgr.py --save_dir=chapters_vcgr_bert --combine_datasets chapters --combine_datasets_val chapters --no_video
+python -m torch.distributed.launch --nproc_per_node 8 --use_env zs_vcgr.py --save_dir=chapters_vcgr_bert --combine_datasets chapters --combine_datasets_val chapters --no_video
 ```
 
 For the random zero-shot baseline, run:
 ```
-python -m torch.distributed.launch --nproc_per_node 8 --use_env vcgr.py --save_dir=chapters_vcgr_random --combine_datasets chapters --combine_datasets_val chapters --random
+python -m torch.distributed.launch --nproc_per_node 8 --use_env zs_vcgr.py --save_dir=chapters_vcgr_random --combine_datasets chapters --combine_datasets_val chapters --random
 ```
 
 ### Dense Video Captioning
 For Vid2Seq on YouCook2/ViTT, run:
 ```
-python -m torch.distributed.launch --nproc_per_node 8 --use_env vc.py --epochs=40 --lr=3e-4 --save_dir=youcook --combine_datasets youcook --combine_datasets_val youcook --batch_size=2 --batch_size_val=2 --schedule="cosine_with_warmup"
-python -m torch.distributed.launch --nproc_per_node 8 --use_env vc.py --epochs=20 --lr=3e-4 --save_dir=vitt --combine_datasets vitt --combine_datasets_val vitt --batch_size=2 --batch_size_val=2 --schedule="cosine_with_warmup"
+python -m torch.distributed.launch --nproc_per_node 8 --use_env dvc.py --epochs=40 --lr=3e-4 --save_dir=youcook --combine_datasets youcook --combine_datasets_val youcook --batch_size=2 --batch_size_val=2 --schedule="cosine_with_warmup"
+python -m torch.distributed.launch --nproc_per_node 8 --use_env dvc.py --epochs=20 --lr=3e-4 --save_dir=vitt --combine_datasets vitt --combine_datasets_val vitt --batch_size=2 --batch_size_val=2 --schedule="cosine_with_warmup"
 ```
-The zero-shot evaluation can be simply done by using the arguments `--load=$load --eval`.
+The zero-shot evaluation can be simply done by loading a checkpoint pretrained on VidChapters-7M for evaluation using the arguments `--load=<CHECKPOINT> --eval`.
+
+## Demo
+To run a pretrained Vid2Seq model on the video of your choice, you first need to extract ASR with the following command: 
+```
+python demo_asr.py --video_example=<VIDEO_PATH> --asr_example <OUTPUT_ASR_PATH> --combine_datasets chapters
+```
+
+Then you can run the model inference:
+```
+python demo_vid2seq.py --load=<CHECKPOINT> --video_example=<VIDEO_PATH> --asr_example <OUTPUT_ASR_PATH> --combine_datasets chapters
+```
+
+## Licenses
+This code is released under the MIT License.
+The licenses for datasets used in the paper are available at the following links: [VidChapters-7M](https://github.com/antoyang/VidChapters/blob/main/LICENSE), [HowTo100M](https://github.com/antoine77340/howto100m/blob/master/LICENSE), [YouCook2](https://github.com/LuoweiZhou/ProcNets-YouCook2/blob/master/LICENSE), and [ViTT](https://github.com/google-research-datasets/Video-Timeline-Tags-ViTT/blob/main/LICENSE).
+
+## Citation
+If you found this work useful, consider giving this repository a star and citing our paper as followed:
+```
+@inproceedings{yang2023vidchapters,
+title={VidChapters-7M: Video Chapters at Scale},
+author={Yang, Antoine and Nagrani, Arsha and Sivic, Josef and Laptev, Ivan and Schmid, Cordelia},
+booktitle={arXiv},
+year={2023}}
+```
