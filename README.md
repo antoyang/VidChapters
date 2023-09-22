@@ -107,13 +107,26 @@ python preproc/vitt.py
 python preproc/youcook.py
 ```
 
-### Ethical considerations
+### Analysis
+To detect languages from ASR or chapters, we run on single GPUs: 
+```
+python language.py 
+```
+You may parallelize this over many jobs.
+
+To obtain gender statistics, we run on a CPU: 
+```
+python gender.py 
+```
+
 To detect videos with NSFW frames or toxic chapter titles or ASR, we run on single GPUs:
 ```
 python nsfw.py 
 ```
 You may parallelize this over many jobs.
 Note that this requires having downloaded [this NSFW classifier](https://github.com/LAION-AI/CLIP-based-NSFW-Detector) and the [Detoxify language model](https://github.com/unitaryai/detoxify).
+
+You can also find the code for the paper plots in the notebook `plots.ipynb`.
 
 ## Model checkpoints
 
