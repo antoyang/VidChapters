@@ -138,17 +138,18 @@ Also, to use BLIP-2 based models, you need to download raw videos from the corre
 ### Vid2Seq Pretraining on HowTo100M
 Run:
 ```
-python -m torch.distributed.launch --nproc_per_node 8 --use_env dvc.py --epochs=5 --fraction_warmup_steps=0.01 --lr=3e-4 \
---print_freq=1000 --save_dir=howto100m --combine_datasets htm --batch_size=8 --clip_max_norm=0.1
+python -m torch.distributed.launch --nproc_per_node 8 --use_env dvc.py --epochs=5 \
+--fraction_warmup_steps=0.01 --lr=3e-4 --print_freq=1000 --save_dir=howto100m \
+--combine_datasets htm --batch_size=8 --clip_max_norm=0.1
 ```
 The pretrained checkpoint on HowTo100M can then be loaded with the argument `--load`.
 
 ### Video Chapter Generation
 For Vid2Seq, run:
 ```
-python -m torch.distributed.launch --nproc_per_node 8 --use_env dvc.py --epochs=10 --lr=3e-4 \
---save_dir=chapters --combine_datasets chapters --combine_datasets_val chapters --batch_size=8 \
---batch_size_val=8 --clip_max_norm=0.1 --schedule="cosine_with_warmup"
+python -m torch.distributed.launch --nproc_per_node 8 --use_env dvc.py --epochs=10 \
+--lr=3e-4 --save_dir=chapters --combine_datasets chapters --combine_datasets_val chapters \
+--batch_size=8 --batch_size_val=8 --clip_max_norm=0.1 --schedule="cosine_with_warmup"
 ```
 Multiple baselines reported in the paper can also be found in `args.py`, e.g. using only visual or speech input with `--no_speech` or `--no_video`, or training only using ASR with `--gen_asr`.
 
@@ -175,9 +176,9 @@ python -m torch.distributed.launch --nproc_per_node 8 --use_env zs_visualvcg.py 
 ### Video Chapter Generation with Ground-Truth Boundaries
 For Vid2Seq, run:
 ```
-python -m torch.distributed.launch --nproc_per_node 8 --use_env vc.py --epochs=20 --lr=3e-4 --save_dir=chapters_vcggt \
---combine_datasets chapters --combine_datasets_val chapters --batch_size=64 --batch_size_val=64 \
---schedule="cosine_with_warmup" --max_input_tokens=256 --max_output_tokens=32
+python -m torch.distributed.launch --nproc_per_node 8 --use_env vc.py --epochs=20 --lr=3e-4 \
+--save_dir=chapters_vcggt --combine_datasets chapters --combine_datasets_val chapters --batch_size=64 \
+--batch_size_val=64 --schedule="cosine_with_warmup" --max_input_tokens=256 --max_output_tokens=32
 ```
 
 For the LLaMA zero-shot baseline, run:
@@ -199,8 +200,8 @@ python -m torch.distributed.launch --nproc_per_node 8 --use_env vc.py --model_na
 For Moment-DETR, run:
 ```
 cd moment_detr
-bash moment_detr/scripts/chapters.sh --use_speech --max_v_l=1200 --downsample --clip_length=3 --lr=3e-4 --n_epoch=50 \
---max_es_cnt=50 --exp_id=chapters --bsz=256 --eval_bsz=256 --num_workers=16
+bash moment_detr/scripts/chapters.sh --use_speech --max_v_l=1200 --downsample --clip_length=3 \
+--lr=3e-4 --n_epoch=50 --max_es_cnt=50 --exp_id=chapters --bsz=256 --eval_bsz=256 --num_workers=16
 ```
 
 For the CLIP zero-shot baseline, run:
@@ -224,10 +225,12 @@ python -m torch.distributed.launch --nproc_per_node 8 --use_env zs_vcgr.py --sav
 ### Dense Video Captioning
 For Vid2Seq on YouCook2/ViTT, run:
 ```
-python -m torch.distributed.launch --nproc_per_node 8 --use_env dvc.py --epochs=40 --lr=3e-4 --save_dir=youcook \
---combine_datasets youcook --combine_datasets_val youcook --batch_size=2 --batch_size_val=2 --schedule="cosine_with_warmup"
-python -m torch.distributed.launch --nproc_per_node 8 --use_env dvc.py --epochs=20 --lr=3e-4 --save_dir=vitt \
---combine_datasets vitt --combine_datasets_val vitt --batch_size=2 --batch_size_val=2 --schedule="cosine_with_warmup"
+python -m torch.distributed.launch --nproc_per_node 8 --use_env dvc.py --epochs=40 \
+--lr=3e-4 --save_dir=youcook --combine_datasets youcook --combine_datasets_val youcook \
+--batch_size=2 --batch_size_val=2 --schedule="cosine_with_warmup"
+python -m torch.distributed.launch --nproc_per_node 8 --use_env dvc.py --epochs=20 \
+--lr=3e-4 --save_dir=vitt --combine_datasets vitt --combine_datasets_val vitt \
+--batch_size=2 --batch_size_val=2 --schedule="cosine_with_warmup"
 ```
 The zero-shot evaluation can be simply done by loading a checkpoint pretrained on VidChapters-7M for evaluation using the arguments `--load=<CHECKPOINT> --eval`.
 
