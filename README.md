@@ -110,23 +110,23 @@ python preproc/youcook.py
 ### Analysis
 To detect languages from ASR or chapters, we run on single GPUs: 
 ```
-python language.py 
+python analysis/language.py 
 ```
 You may parallelize this over many jobs.
 
 To obtain gender statistics, we run on a CPU: 
 ```
-python gender.py 
+python analysis/gender.py 
 ```
 
 To detect videos with NSFW frames or toxic chapter titles or ASR, we run on single GPUs:
 ```
-python nsfw.py 
+python analysis/nsfw.py 
 ```
 You may parallelize this over many jobs.
 Note that this requires having downloaded [this NSFW classifier](https://github.com/LAION-AI/CLIP-based-NSFW-Detector) and the [Detoxify language model](https://github.com/unitaryai/detoxify).
 
-You can also find the code for the paper plots in the notebook `plots.ipynb`.
+You can also find the code for the paper plots in the notebook `analysis/plots.ipynb`, and the details of the manual assessment presented in the paper in `analysis/manual_assessment.xlsx`.
 
 ## Model checkpoints
 
