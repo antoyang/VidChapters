@@ -121,8 +121,8 @@ We release the following Vid2Seq checkpoints and report their corresponding SODA
 
 | Training data | VidChapters-7M | YouCook2 | ViTT | url | size |
 |-----|-----|-----|-----|-----|-----|
-| HowTo100M | 10.6 | | | [Drive](https://drive.google.com/file/d/1iTnzjTRKV3ctEMjCfiXed824_apJeUZJ/view?usp=sharing)    | 3.2GB     |
-| VidChapters-7M | | | | [Drive](https://drive.google.com/file/d/1GxzczoofH8AASPgrLWUD9oRwMPSYoKRP/view?usp=sharing)    | 3.2GB     |
+| HowTo100M | | | | [Drive](https://drive.google.com/file/d/1iTnzjTRKV3ctEMjCfiXed824_apJeUZJ/view?usp=sharing)    | 3.2GB     |
+| VidChapters-7M | 10.6 | | | [Drive](https://drive.google.com/file/d/1GxzczoofH8AASPgrLWUD9oRwMPSYoKRP/view?usp=sharing)    | 3.2GB     |
 | HowTo100M + VidChapters-7M | 11.4 | | | [Drive](https://drive.google.com/file/d/117GoH6QLE1hjycCa9i43HxlAgvNWQ6Mz/view?usp=sharing)    | 3.2GB     |
 | HowTo100M + VidChapters-7M + YouCook2 | | 10.3 | | [Drive](https://drive.google.com/file/d/1bzYgUhQHtLt9RA3R6NWTmVlii-41nUqv/view?usp=sharing)    | 3.2GB      |
 | HowTo100M + VidChapters-7M + ViTT | | | 15.0 | [Drive](https://drive.google.com/file/d/1peVkJ0Zo0CZt8wHFYxn44lTMIWwipviW/view?usp=sharing)    | 3.2GB      |
