@@ -161,7 +161,8 @@ python train.py --cfg_path cfgs/chapters_clip_pdvc.yml --gpu_id 0 --epoch 5 --no
 
 For the text tiling + LLaMA zero-shot baseline, run:
 ```
-python -m torch.distributed.launch --nproc_per_node 8 --use_env zs_speechvcg.py --combine_datasets=chapters --combine_datasets_val=chapters --save_dir=chapters_texttilingllama --model_name <MODEL_DIR>/7BHF
+python -m torch.distributed.launch --nproc_per_node 8 --use_env zs_speechvcg.py --combine_datasets=chapters \
+--combine_datasets_val=chapters --save_dir=chapters_texttilingllama --model_name <MODEL_DIR>/7BHF
 ```
 Pass `--random` to the previous command to run the random baseline.
 
@@ -224,11 +225,9 @@ python -m torch.distributed.launch --nproc_per_node 8 --use_env zs_vcgr.py --sav
 For Vid2Seq on YouCook2/ViTT, run:
 ```
 python -m torch.distributed.launch --nproc_per_node 8 --use_env dvc.py --epochs=40 --lr=3e-4 --save_dir=youcook \
---combine_datasets youcook --combine_datasets_val youcook --batch_size=2 --batch_size_val=2 \
---schedule="cosine_with_warmup"
+--combine_datasets youcook --combine_datasets_val youcook --batch_size=2 --batch_size_val=2 --schedule="cosine_with_warmup"
 python -m torch.distributed.launch --nproc_per_node 8 --use_env dvc.py --epochs=20 --lr=3e-4 --save_dir=vitt \
---combine_datasets vitt --combine_datasets_val vitt --batch_size=2 --batch_size_val=2 \
---schedule="cosine_with_warmup"
+--combine_datasets vitt --combine_datasets_val vitt --batch_size=2 --batch_size_val=2 --schedule="cosine_with_warmup"
 ```
 The zero-shot evaluation can be simply done by loading a checkpoint pretrained on VidChapters-7M for evaluation using the arguments `--load=<CHECKPOINT> --eval`.
 
