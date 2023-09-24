@@ -143,13 +143,13 @@ For HowTo100M pretraining, the full video chapter generation task, and dense vid
 For the task of video chapter generation with ground-truth boundaries, we release the following Vid2Seq checkpoint and report its corresponding CIDEr performance.
 
 | Training data | VidChapters-7M (test) | url | size |
-|-----|-----|-----|-----|-----|-----|
+|-----|-----|-----|-----|
 | HowTo100M + VidChapters-7M | 120.5 | [Drive](https://drive.google.com/file/d/1bVx_taoCQAYfr1w7UcT-WpcREsJ_nHOo/view?usp=sharing)    | 1.1GB     |
 
 For the task of video chapter grounding, we release the following Moment-DETR checkpoint and report its corresponding R@10s performance.
 
 | Training data | VidChapters-7M (test) | url | size |
-|-----|-----|-----|-----|-----|-----|
+|-----|-----|-----|-----|
 | VidChapters-7M | 21.8 | [Drive](https://drive.google.com/file/d/1V8DGnBN-3pK2CrGulaMpSPYv8rKQi2xg/view?usp=sharing)    | 0.9GB     |
 
 ## Training and evaluation
