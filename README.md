@@ -191,7 +191,7 @@ For Vid2Seq, run:
 ```
 python -m torch.distributed.launch --nproc_per_node 8 --use_env vc.py --epochs=20 --lr=3e-4 \
 --save_dir=chapters_vcggt --combine_datasets chapters --combine_datasets_val chapters --batch_size=64 \
---batch_size_val=64 --schedule="cosine_with_warmup" --max_input_tokens=256 --max_output_tokens=32
+--batch_size_val=1 --schedule="cosine_with_warmup" --max_input_tokens=256 --max_output_tokens=32
 ```
 
 For the LLaMA zero-shot baseline, run:
@@ -213,9 +213,10 @@ python -m torch.distributed.launch --nproc_per_node 8 --use_env vc.py --model_na
 For Moment-DETR, run:
 ```
 cd moment_detr
-bash moment_detr/scripts/chapters.sh --use_speech --max_v_l=1200 --downsample --clip_length=3 \
---lr=3e-4 --n_epoch=50 --max_es_cnt=50 --exp_id=chapters --bsz=256 --eval_bsz=256 --num_workers=16
+bash moment_detr/scripts/chapters.sh --max_v_l=1200 --downsample --clip_length=3 --lr=3e-4 \
+--n_epoch=50 --max_es_cnt=50 --exp_id=chapters --bsz=256 --eval_bsz=256 --num_workers=16
 ```
+Inference with Moment-DETR can be run with the script `moment_detr/scripts/chapters_inference.sh`, the same parameters, and a parameter `--resume` pointing to a pretrained checkpoint.
 
 For the CLIP zero-shot baseline, run:
 ```
