@@ -172,6 +172,7 @@ cd PDVC
 conda activate PDVC_env
 python train.py --cfg_path cfgs/chapters_clip_pdvc.yml --gpu_id 0 --epoch 5 --no_self_iou --lr 1e-4
 ```
+Test inference with PDVC can be done by setting the evaluation paths to the test data in the config, using the same script and setting the parameters `--load` pointing to a pretrained checkpoint and `--epoch 0`.
 
 For the text tiling + LLaMA zero-shot baseline, run:
 ```
@@ -247,6 +248,15 @@ python -m torch.distributed.launch --nproc_per_node 8 --use_env dvc.py --epochs=
 --batch_size=2 --batch_size_val=2 --schedule="cosine_with_warmup"
 ```
 The zero-shot evaluation can be simply done by loading a checkpoint pretrained on VidChapters-7M for evaluation using the arguments `--load=<CHECKPOINT> --eval`.
+
+For PDVC on YouCook2/ViTT, run:
+```
+cd PDVC
+conda activate PDVC_env
+python train.py --cfg_path cfgs/yc2_clip_pdvc.yml --gpu_id 0 
+```
+To load a pretrained PDVC checkpoint, set the parameters `--load` pointing to a pretrained checkpoint and `--load_vocab data/vocabulary_allchapters.json`.  
+Test inference with PDVC can be done by setting the evaluation paths to the test data in the config, using the same script, and setting the parameters `--load` pointing to a pretrained checkpoint and `--epoch 0`.
 
 ## Demo
 To run a pretrained Vid2Seq model on the video of your choice, you first need to extract ASR with the following command: 
