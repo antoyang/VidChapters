@@ -69,7 +69,7 @@ We also provide processed annotations, ASR and visual features [here](https://dr
 
 ### Visual Feature Extraction
 We follow [FrozenBiLM](https://github.com/antoyang/FrozenBiLM) to extract CLIP ViT-L/14 @ 224 pixels features at 1 FPS for all videos. 
-We store them in `SSD_DIR/chapters_clipvitl14_features`, one file per video, for VidChapters-7M/HowTo100M, and gather them in a single `.pth` file for all videos in YouCook2/ViTT.
+We store them in `SSD_DIR/chapters_clipvitl14_features`/`SSD_DIR/howto100m_clip_features`, one file per video, for VidChapters-7M/HowTo100M, and gather them in a single `.pth` file for all videos in YouCook2/ViTT.
 
 ### ASR Extraction
 To extract ASR, given a `csv` file prepared like for the visual feature extraction and an `output_path` where to store the extracted ASR, we run on a single GPU:
