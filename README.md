@@ -130,18 +130,30 @@ You can also find the code for the paper plots in the notebook `analysis/plots.i
 
 ## Model checkpoints
 
-We release the following Vid2Seq checkpoints and report their corresponding SODA performance.
+For HowTo100M pretraining, the full video chapter generation task, and dense video captioning tasks, we release the following Vid2Seq checkpoints and report their corresponding SODA performance.
 
-| Training data | VidChapters-7M | YouCook2 | ViTT | url | size |
+| Training data | VidChapters-7M (test) | YouCook2 (val) | ViTT (test) | url | size |
 |-----|-----|-----|-----|-----|-----|
-| HowTo100M | | | | [Drive](https://drive.google.com/file/d/1iTnzjTRKV3ctEMjCfiXed824_apJeUZJ/view?usp=sharing)    | 3.2GB     |
-| VidChapters-7M | 10.6 | | | [Drive](https://drive.google.com/file/d/1GxzczoofH8AASPgrLWUD9oRwMPSYoKRP/view?usp=sharing)    | 3.2GB     |
-| HowTo100M + VidChapters-7M | 11.4 | | | [Drive](https://drive.google.com/file/d/117GoH6QLE1hjycCa9i43HxlAgvNWQ6Mz/view?usp=sharing)    | 3.2GB     |
-| HowTo100M + VidChapters-7M + YouCook2 | | 10.3 | | [Drive](https://drive.google.com/file/d/1bzYgUhQHtLt9RA3R6NWTmVlii-41nUqv/view?usp=sharing)    | 3.2GB      |
-| HowTo100M + VidChapters-7M + ViTT | | | 15.0 | [Drive](https://drive.google.com/file/d/1peVkJ0Zo0CZt8wHFYxn44lTMIWwipviW/view?usp=sharing)    | 3.2GB      |
+| HowTo100M | | | | [Drive](https://drive.google.com/file/d/1SHpWrE__jjTuW2mLkuJXabPsSQYsxTzF/view?usp=sharing)    | 1.1GB     |
+| VidChapters-7M | 10.6 | | | [Drive](https://drive.google.com/file/d/1jbmfuB44p3twrlqnfIv6cCM3Oyqk-zeh/view?usp=sharing)    | 1.1GB     |
+| HowTo100M + VidChapters-7M | 11.4 | | | [Drive](https://drive.google.com/file/d/1v4dGHMFQdliG0BFOlORP2B-dJEUd5Uys/view?usp=sharing)    | 1.1GB     |
+| HowTo100M + VidChapters-7M + YouCook2 | | 10.3 | | [Drive](https://drive.google.com/file/d/1Kvx5OHJANtKVlyKe5oLvq6YOkewFqz8E/view?usp=sharing)    | 1.1GB      |
+| HowTo100M + VidChapters-7M + ViTT | | | 15.0 | [Drive](https://drive.google.com/file/d/1qmQcEkDDlnkAkRd6BIrVoArBv6Sg1Lv7/view?usp=sharing)    | 1.1GB      |
+
+For the task of video chapter generation with ground-truth boundaries, we release the following Vid2Seq checkpoint and report its corresponding CIDEr performance.
+
+| Training data | VidChapters-7M (test) | url | size |
+|-----|-----|-----|-----|-----|-----|
+| HowTo100M + VidChapters-7M | 120.5 | [Drive](https://drive.google.com/file/d/1bVx_taoCQAYfr1w7UcT-WpcREsJ_nHOo/view?usp=sharing)    | 1.1GB     |
+
+For the task of video chapter grounding, we release the following Moment-DETR checkpoint and report its corresponding R@10s performance.
+
+| Training data | VidChapters-7M (test) | url | size |
+|-----|-----|-----|-----|-----|-----|
+| VidChapters-7M | 21.8 | [Drive](https://drive.google.com/file/d/1V8DGnBN-3pK2CrGulaMpSPYv8rKQi2xg/view?usp=sharing)    | 0.9GB     |
 
 ## Training and evaluation
-Evaluation can be done with the same scripts as below but specifying `--load=<CHECKPOINT> --eval`.
+Unless stated otherwise, to load a pretrained checkpoint with the following scripts, you can use `--load=<CHECKPOINT>`, and evaluation can be done with the same scripts as below but specifying `--eval`.
 
 Note that most of our training runs were done using A100 GPUs with 80GB of memory. 
 You may need to adapt the batch size if you are using lower memory GPUs.
@@ -155,7 +167,6 @@ python -m torch.distributed.launch --nproc_per_node 8 --use_env dvc.py --epochs=
 --fraction_warmup_steps=0.01 --lr=3e-4 --print_freq=1000 --save_dir=howto100m \
 --combine_datasets htm --batch_size=8 --clip_max_norm=0.1
 ```
-The pretrained checkpoint on HowTo100M can then be loaded with the argument `--load`.
 
 ### Video Chapter Generation
 For Vid2Seq, run:
@@ -170,9 +181,9 @@ For PDVC, run:
 ```
 cd PDVC
 conda activate PDVC_env
-python train.py --cfg_path cfgs/chapters_clip_pdvc.yml --gpu_id 0 --epoch 5 --no_self_iou --lr 1e-4
+python train.py --cfg_path cfgs/chapters_clip_pdvc.yml --gpu_id=0 --epoch=5 --no_self_iou --lr=1e-4
 ```
-Test inference with PDVC can be done by setting the evaluation paths to the test data in the config, using the same script and setting the parameters `--load` pointing to a pretrained checkpoint and `--epoch 0`.
+Test inference with PDVC can be done by setting the evaluation paths to the test data in the config, using the same script, and setting the parameters `--load=<CHECKPOINT>` and `--epoch=0`.
 
 For the text tiling + LLaMA zero-shot baseline, run:
 ```
@@ -217,7 +228,7 @@ cd moment_detr
 bash moment_detr/scripts/chapters.sh --max_v_l=1200 --downsample --clip_length=3 --lr=3e-4 \
 --n_epoch=50 --max_es_cnt=50 --exp_id=chapters --bsz=256 --eval_bsz=256 --num_workers=16
 ```
-Inference with Moment-DETR can be run with the script `moment_detr/scripts/chapters_inference.sh`, the same parameters, and a parameter `--resume` pointing to a pretrained checkpoint.
+Inference with Moment-DETR can be run with the script `moment_detr/scripts/chapters_inference.sh`, the same parameters, and a parameter `--resume=<CHECKPOINT>`.
 
 For the CLIP zero-shot baseline, run:
 ```
@@ -253,10 +264,11 @@ For PDVC on YouCook2/ViTT, run:
 ```
 cd PDVC
 conda activate PDVC_env
-python train.py --cfg_path cfgs/yc2_clip_pdvc.yml --gpu_id 0 
+python train.py --cfg_path=cfgs/yc2_clip_pdvc.yml --gpu_id=0
+python train.py --cfg_path=cfgs/vitt_clip_pdvc.yml --gpu_id=0 
 ```
-To load a pretrained PDVC checkpoint, set the parameters `--load` pointing to a pretrained checkpoint and `--load_vocab data/vocabulary_allchapters.json`.  
-Test inference with PDVC can be done by setting the evaluation paths to the test data in the config, using the same script, and setting the parameters `--load` pointing to a pretrained checkpoint and `--epoch 0`.
+To load a pretrained PDVC checkpoint, set the parameters `--load=<CHECKPOINT>` and `--load_vocab data/vocabulary_allchapters.json`.  
+Test inference with PDVC can be done by setting the evaluation paths to the test data in the config, using the same script, and setting the parameters `--load=<CHECKPOINT>` and `--epoch=0`.
 
 ## Demo
 To run a pretrained Vid2Seq model on the video of your choice, you first need to extract ASR with the following command: 
