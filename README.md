@@ -291,7 +291,7 @@ If you found this work useful, consider giving this repository a star and citing
 ```
 @inproceedings{yang2023vidchapters,
 title={VidChapters-7M: Video Chapters at Scale},
-author={Yang, Antoine and Nagrani, Arsha and Sivic, Josef and Laptev, Ivan and Schmid, Cordelia},
+author={Antoine Yang and Arsha Nagrani and Ivan Laptev and Josef Sivic and Cordelia Schmid},
 booktitle={NeurIPS},
 year={2023}}
 ```
