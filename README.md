@@ -11,7 +11,7 @@ This repository provides the code for our paper, including:
 - Environment setup
 - Data collection pipeline for VidChapters-7M (in case you want to collect your own set of chaptered videos)
 - Data downloading instructions and processed data files
-- Data processing scripts (in case you want to reproduce the preprocessing)
+- Data processing and analysis scripts (in case you want to reproduce the preprocessing)
 - Training and evaluation scripts for the tasks of video chapter generation without or with ground-truth boundaries and video chapter grounding on VidChapters-7M, and dense video captioning on YouCook2 and ViTT
 - Pretrained model checkpoints
 - A demo to chapter or densely caption the video of your choice with a pretrained Vid2Seq model
