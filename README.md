@@ -158,7 +158,7 @@ Unless stated otherwise, to load a pretrained checkpoint with the following scri
 Note that most of our training runs were done using A100 GPUs with 80GB of memory. 
 You may need to adapt the batch size if you are using lower memory GPUs.
 
-Also, to use BLIP-2 based models, you need to download raw videos from the corresponding datasets and prepare a `video_paths.json` file that maps video IDs to the video path.
+Also, to use BLIP-2-based scripts, you need to download raw videos from the corresponding datasets and prepare a `video_paths.json` file that maps video IDs to the video path.
 
 ### Vid2Seq Pretraining on HowTo100M
 Run:
