@@ -2,7 +2,7 @@
 
 [Webpage](https://antoyang.github.io/vidchapters.html) • [Paper](https://arxiv.org/abs/TBC) 
 
-![Teaser](https://antoyang.github.io/img/vidchapters.png)
+![Teaser](https://antoyang.github.io/img/vidchapters-header.png)
 
 In this work, we present VidChapters-7M, a large-scale dataset of user-chaptered videos. 
 We study three tasks on top of this dataset and show that video chapter generation models trained on VidChapters-7M transfer well to dense video captioning.
