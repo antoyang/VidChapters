@@ -42,7 +42,7 @@ pip install -r requirements.txt
 ```
 
 Notes: 
-- The Whisper ASR extraction is done with a separate conda environment created as specificied in [WhisperX](https://github.com/m-bain/whisperX), with Python 3.10 and PyTorch 2.0. 
+- The Whisper ASR extraction is done with a separate conda environment created as specified in [WhisperX](https://github.com/m-bain/whisperX), with Python 3.10 and PyTorch 2.0. 
 - The PDVC experiments are run with a separate conda environment as suggested by [PDVC](https://github.com/ttengwang/PDVC) , so to compile the deformable attention layer.
 
 ## Data collection pipeline
