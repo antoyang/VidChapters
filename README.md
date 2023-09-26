@@ -127,7 +127,7 @@ To obtain gender statistics, we run on a CPU:
 python analysis/gender.py 
 ```
 
-To detect videos with NSFW frames or toxic chapter titles or ASR, we run on single GPUs:
+To detect videos with NSFW frames or toxic chapter titles or ASR, we run on single GPUs (for this, you will also need detoxify==0.5.1 that you can pip install):
 ```
 python analysis/nsfw.py 
 ```
