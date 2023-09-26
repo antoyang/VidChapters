@@ -28,7 +28,7 @@ This codebase also includes a PyTorch implementation of [Vid2Seq](https://antoya
 There are a few differences with the original [Jax implementation](https://github.com/google-research/scenic/tree/main/scenic/projects/vid2seq), including:
 - Usage of [t5-base](https://huggingface.co/docs/transformers/model_doc/t5) instead of [t5-v1_1-base](https://huggingface.co/docs/transformers/model_doc/t5v1.1), which also results in a few architectural differences (`is_gated_act=False` instead of True)
 - Addition of a normalization of the weights related to time tokens at every optimization step
-- No random temporal cropping
+- No random temporal cropping during training
 - Whisper ASR instead of Google ASR
 
 ## Paths and Requirements
