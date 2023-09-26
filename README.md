@@ -1,5 +1,11 @@
 # VidChapters-7M: Video Chapters at Scale
 
+[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/vidchapters-7m-video-chapters-at-scale/dense-video-captioning-on-vidchapters-7m)](https://paperswithcode.com/sota/dense-video-captioning-on-vidchapters-7m?p=vidchapters-7m-video-chapters-at-scale)
+[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/vidchapters-7m-video-chapters-at-scale/video-captioning-on-vidchapters-7m)](https://paperswithcode.com/sota/video-captioning-on-vidchapters-7m?p=vidchapters-7m-video-chapters-at-scale)
+[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/vidchapters-7m-video-chapters-at-scale/language-based-temporal-localization-on)](https://paperswithcode.com/sota/language-based-temporal-localization-on?p=vidchapters-7m-video-chapters-at-scale)
+[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/vidchapters-7m-video-chapters-at-scale/dense-video-captioning-on-youcook2)](https://paperswithcode.com/sota/dense-video-captioning-on-youcook2?p=vidchapters-7m-video-chapters-at-scale)
+[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/vidchapters-7m-video-chapters-at-scale/dense-video-captioning-on-vitt)](https://paperswithcode.com/sota/dense-video-captioning-on-vitt?p=vidchapters-7m-video-chapters-at-scale)
+
 [Webpage](https://antoyang.github.io/vidchapters.html) • [Paper](http://arxiv.org/abs/2309.13952) 
 
 ![Teaser](https://antoyang.github.io/img/vidchapters-header.png)
