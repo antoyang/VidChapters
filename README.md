@@ -5,6 +5,8 @@
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/vidchapters-7m-video-chapters-at-scale/language-based-temporal-localization-on)](https://paperswithcode.com/sota/language-based-temporal-localization-on?p=vidchapters-7m-video-chapters-at-scale)
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/vidchapters-7m-video-chapters-at-scale/dense-video-captioning-on-youcook2)](https://paperswithcode.com/sota/dense-video-captioning-on-youcook2?p=vidchapters-7m-video-chapters-at-scale)
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/vidchapters-7m-video-chapters-at-scale/dense-video-captioning-on-vitt)](https://paperswithcode.com/sota/dense-video-captioning-on-vitt?p=vidchapters-7m-video-chapters-at-scale)
+[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/vidchapters-7m-video-chapters-at-scale/zero-shot-dense-video-captioning-on-youcook2)](https://paperswithcode.com/sota/zero-shot-dense-video-captioning-on-youcook2?p=vidchapters-7m-video-chapters-at-scale)
+[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/vidchapters-7m-video-chapters-at-scale/zero-shot-dense-video-captioning-on-vitt)](https://paperswithcode.com/sota/zero-shot-dense-video-captioning-on-vitt?p=vidchapters-7m-video-chapters-at-scale)
 
 [Webpage](https://antoyang.github.io/vidchapters.html) • [Paper](http://arxiv.org/abs/2309.13952) 
 
