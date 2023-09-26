@@ -1,6 +1,6 @@
 # VidChapters-7M: Video Chapters at Scale
 
-[Webpage](https://antoyang.github.io/vidchapters.html) • [Paper](https://arxiv.org/abs/TBC) 
+[Webpage](https://antoyang.github.io/vidchapters.html) • [Paper](http://arxiv.org/abs/2309.13952) 
 
 ![Teaser](https://antoyang.github.io/img/vidchapters-header.png)
 
