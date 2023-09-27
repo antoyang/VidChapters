@@ -279,7 +279,7 @@ To load a pretrained PDVC checkpoint, set the parameters `--load=<CHECKPOINT>` a
 Test inference with PDVC can be done by setting the evaluation paths to the test data in the config, using the same script, and setting the parameters `--load=<CHECKPOINT>` and `--epoch=0`.
 
 ## Demo
-To run a pretrained Vid2Seq model on the video of your choice, you first need to extract ASR with the following command: 
+To run a pretrained Vid2Seq model (for video chapter generation or dense video captioning) on the video of your choice, you first need to extract ASR with the following command: 
 ```
 conda activate whisperX_env
 python demo_asr.py --video_example=<VIDEO_PATH> --asr_example <OUTPUT_ASR_PATH> --combine_datasets chapters
