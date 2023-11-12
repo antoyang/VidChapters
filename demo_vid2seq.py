@@ -130,7 +130,7 @@ sub = {'text': texts,
 
 # ASR to tokens
 print("ASR to tokens")
-if not sub:
+if not sub['text']:
     input_tokens = (torch.ones(1) * tokenizer.eos_token_id).long()
 else:
     probe = subprocess.run(
