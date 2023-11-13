@@ -130,14 +130,14 @@ sub = {'text': texts,
 
 # ASR to tokens
 print("ASR to tokens")
+probe = subprocess.run(
+    ['ffprobe', '-v', 'error', '-show_entries', 'format=duration', '-of', 'default=noprint_wrappers=1:nokey=1',
+     args.video_example], stdout=subprocess.PIPE,
+    stderr=subprocess.STDOUT)
+duration = float(probe.stdout)
 if not sub['text']:
     input_tokens = (torch.ones(1) * tokenizer.eos_token_id).long()
 else:
-    probe = subprocess.run(
-        ['ffprobe', '-v', 'error', '-show_entries', 'format=duration', '-of', 'default=noprint_wrappers=1:nokey=1',
-         args.video_example], stdout=subprocess.PIPE,
-        stderr=subprocess.STDOUT)
-    duration = float(probe.stdout)
     time_input_tokens = [torch.LongTensor([time_tokenize(st, duration, args.num_bins, len(tokenizer) - args.num_bins),
                                            time_tokenize(ed, duration, args.num_bins, len(tokenizer) - args.num_bins)])
                          for st, ed in zip(sub['start'], sub['end'])]
